@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from werkzeug.security import generate_password_hash
 
 db = SQLAlchemy()
 
@@ -19,7 +20,6 @@ from .models import User
 
 @login_manager.user_loader
 def load_user(user_id):
-    # since the user_id is just the primary key of our user table, use it in the query for the user
     return User.query.get(int(user_id))
 
 from . import models
@@ -32,3 +32,13 @@ app.register_blueprint(main_blueprint)
 
 with app.app_context():
     db.create_all()
+    if not User.query.filter(User.email == 'admin@admin.com').first():
+        user = User(
+            email='admin@admin.com',
+            password=generate_password_hash('Admin123'),
+            name='Admin User',
+            userType='Admin'
+        )
+        db.session.add(user)
+        db.session.commit()
+
