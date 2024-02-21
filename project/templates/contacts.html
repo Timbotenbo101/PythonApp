@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Contacts</h3>
+{% if contactsCount > 0 %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Contact Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for contact in contacts %}
+        <tr>
+            <td>{{contact.name}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+     <p>No contacts found</p>
+{% endif %}
+</div>  
+{% endblock %}
