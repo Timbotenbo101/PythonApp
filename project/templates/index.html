@@ -2,9 +2,15 @@
 
 {% block content %}
 <h1 class="title">
-  Flask Login Example
+  Welcome to the Contacts App
 </h1>
+
 <h2 class="subtitle">
-  Easy authentication and authorization in Flask.
+  {% if not current_user.is_authenticated %}
+  Here you can manage the contact information for all of your customers. Please sign in to get started
+  {% else %}                   
+  Visit the contacts page to add and manage contacts.
+  {% endif %}
 </h2>
+
 {% endblock %}

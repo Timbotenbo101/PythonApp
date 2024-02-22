@@ -1,19 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="column is-4 is-offset-4">
+<div class="column">
     <h3 class="title">Contacts</h3>
+
+    <div class="pb-3">
+        <a class="button is-success" href="{{ url_for('main.addcontact') }}">Add Contact</a>
+    </div>
 {% if contactsCount > 0 %}
     <table class="table">
         <thead>
         <tr>
-            <th>Contact Name</th>
+            <th>Name</th>
+            <th>Company</th>
+            <th>Email</th>
+            <th>Telephone</th>
         </tr>
         </thead>
         <tbody>
         {% for contact in contacts %}
         <tr>
             <td>{{contact.name}}</td>
+            <td>{{contact.company}}</td>
+            <td>{{contact.email}}</td>
+            <td>{{contact.phoneNumber}}</td>
         </tr>
         {% endfor %}
         </tbody>
