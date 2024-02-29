@@ -18,7 +18,7 @@
         <div class="navbar-menu">
             {% if current_user.is_authenticated %}
             <div class="navbar start">
-                <a href="{{ url_for('main.contacts') }}" class="navbar-item has-text-white has-background-dark">
+                <a href="{{ url_for('main.contacts') }}" class="navbar-item has-text-white has-background-dark hideMe">
                     Contacts
                 </a>
                 <a href="{{ url_for('main.profile') }}" class="navbar-item has-text-white has-background-dark">
@@ -46,11 +46,20 @@
             </div>
         </div>
     </nav>
-
     <div class="p-3">
         {% block content %}
         {% endblock %}
     </div>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+            const $notification = $delete.parentNode;
 
+            $delete.addEventListener('click', () => {
+            $notification.parentNode.removeChild($notification);
+            });
+        });
+    });
+</script>
 </html>

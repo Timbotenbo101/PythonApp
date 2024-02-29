@@ -3,37 +3,50 @@
 {% block content %}
 <div class="column is-4">
     <h3 class="title">Edit Contact</h3>
-    <a class="pb-3" href="{{ url_for('main.contacts') }}">
-        <strong>Back to contacts</strong>
-        </a>
     <div class="box">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-danger" id="fadeout">
+                <button class="delete"></button>
+                <ul>
+                    {% for message in messages %}
+                    <li>&bull; {{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        {% endwith %}
         <form method="POST" action="/editcontact">
             <input class="input" type="hidden" name="id" value="{{contact.id}}">
             <div class="field">
                 <div class="control">
-                    <input class="input" type="text" name="name" value="{{contact.name}}" autofocus="">
+                    <input class="input" type="text" name="name" value="{{contact.name}}" autofocus="" required>
                 </div>
             </div>
 
             <div class="field">
                 <div class="control">
-                    <input class="input" type="text" name="company" value="{{contact.company}}" autofocus="">
+                    <input class="input" type="text" name="company" value="{{contact.company}}" autofocus="" required>
                 </div>
             </div>
 
             <div class="field">
                 <div class="control">
-                    <input class="input" type="email" name="email"  value="{{contact.email}}" autofocus="">
+                    <input class="input" type="email" name="email"  value="{{contact.email}}" autofocus="" required>
                 </div>
             </div>
 
             <div class="field">
                 <div class="control">
-                    <input class="input" type="tel" name="telephone"  value="{{contact.phoneNumber}}" autofocus="">
+                    <input class="input" type="tel" name="telephone"  value="{{contact.phoneNumber}}" autofocus="" required>
                 </div>
             </div>
 
-            <button class="button is-block is-success is-fullwidth">Save Changes</button>
+            <span>
+                <a class="button is-info" href="{{ url_for('main.contacts') }}">Cancel</a>
+                <button class="button is-success">Save Changes</button>
+            </span>
+            
         </form>
     </div>
 </div>
