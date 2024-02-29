@@ -12,5 +12,5 @@ class Contacts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     company = db.Column(db.String(100))
-    phoneNumber = db.Column(db.Integer)
+    phoneNumber = db.Column(db.String(100))
     email = db.Column(db.String(100))

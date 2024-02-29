@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="column is-4">
+<div class="column is-8">
     <h3 class="title">Contacts</h3>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -16,39 +16,39 @@
         <a class="button is-success" href="{{ url_for('main.addcontact') }}">Add Contact</a>
     </div>
 {% if contactsCount > 0 %}
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Company</th>
-            <th>Email</th>
-            <th>Telephone</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for contact in contacts %}
-        <tr>
-            <td>{{contact.name}}</td>
-            <td>{{contact.company}}</td>
-            <td>{{contact.email}}</td>
-            <td>{{contact.phoneNumber}}</td>
-            <td>
-                <div class="pb-3">
-                    <a class="button is-success is-small" href="{{ url_for('main.editcontact', contact_id=contact.id) }}">Edit</a>
-                </div>
-                {% if isAdmin %}
-                <div class="pb-3">
-                    <a class="button is-danger is-small" href="{{ url_for('main.deletecontact', contact_id=contact.id)}}">Delete</a>
-                </div>
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<table class="table is-striped is-hoverable">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Company</th>
+        <th>Email</th>
+        <th>Telephone</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for contact in contacts %}
+    <tr>
+        <td>{{contact.name|truncate(50, True)}}</td>
+        <td>{{contact.company|truncate(50, True)}}</td>
+        <td>{{contact.email|truncate(50, True)}}</td>
+        <td>{{contact.phoneNumber|truncate(50, True)}}</td>
+        <td>
+            <div class="pb-3">
+                <a class="button is-success is-small" href="{{ url_for('main.editcontact', contact_id=contact.id) }}">Edit</a>
+            </div>
+            {% if isAdmin %}
+            <div class="pb-3">
+                <a class="button is-danger is-small" href="{{ url_for('main.deletecontact', contact_id=contact.id)}}">Delete</a>
+            </div>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% else %}
-     <p>No contacts found</p>
+<p>No contacts found</p>
 {% endif %}
-</div>  
+</div>
 {% endblock %}
