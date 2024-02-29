@@ -12,7 +12,7 @@ def index():
 @main.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', name=current_user.name, isAdmin=(current_user.userType == "Admin"))
+    return render_template('profile.html')
 
 @main.route('/contacts')
 @login_required
@@ -47,3 +47,48 @@ def addcontact_post():
     db.session.add(new_contact)
     db.session.commit()
     return redirect(url_for('main.contacts'))
+
+@main.route('/editcontact/<int:contact_id>')
+@login_required
+def editcontact(contact_id):
+    contact = Contacts.query.filter_by(id=contact_id).first()
+    return render_template('editContact.html', contact=contact)
+
+@main.route('/editcontact', methods=['POST'])
+@login_required
+def editcontact_post():
+    id = request.form.get('id')
+    email = request.form.get('email')
+    name = request.form.get('name')
+    company = request.form.get('company')
+    telephone = request.form.get('telephone')
+
+    contact = Contacts.query.filter_by(id = id).first()
+    duplicateContact = Contacts.query.filter(id != id, email == email).first() # if this returns a contact, then the email already exists in database
+
+    if duplicateContact: # redirect back if there is a separate contact with matching email address
+        flash('Another contact with this email address already exists')
+        return redirect(url_for('main.addcontact'))
+
+    # update contact data and commit
+    contact.email = email
+    contact.name = name
+    contact.company = company
+    contact.phoneNumber = telephone
+    db.session.commit()
+    return redirect(url_for('main.contacts'))
+
+@main.route('/deletecontact/<int:contact_id>')
+@login_required
+def deletecontact(contact_id):
+    contact = Contacts.query.filter_by(id=contact_id).first()
+    return render_template('deleteContact.html', contact=contact)
+
+@main.route('/confirmdelete/<int:contact_id>')
+@login_required
+def confirmdelete(contact_id):
+    contact = Contacts.query.filter_by(id=contact_id).first()
+    db.session.delete(contact)
+    db.session.commit()
+    return redirect(url_for('main.contacts'))
+    
