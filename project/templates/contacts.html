@@ -36,12 +36,11 @@
         <td>
             <div class="pb-3">
                 <a class="button is-success is-small" href="{{ url_for('main.editcontact', contact_id=contact.id) }}">Edit</a>
-            </div>
-            {% if isAdmin %}
-            <div class="pb-3">
+                {% if isAdmin %}
                 <a class="button is-danger is-small" href="{{ url_for('main.deletecontact', contact_id=contact.id)}}">Delete</a>
+                {% endif %}
             </div>
-            {% endif %}
+           
         </td>
     </tr>
     {% endfor %}
