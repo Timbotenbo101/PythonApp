@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-4">
+    <h3 class="title">Delete User</h3>
+    
+    <h4>Are you sure you want to delete this user?</h5>
+    <div class="box">
+        <div class="field">
+            <strong>Name: </strong>{{user.name}}
+        </div>
+        <div class="field">
+            <strong>Email: </strong>{{user.email}}
+        </div>
+
+        <div class="field">
+            <strong>User Type</strong> {{user.userType}}
+        </div>
+
+        <span>
+            <a class="button is-info" href="{{ url_for('main.users') }}">Cancel</a>
+            <a class="button is-danger" href="{{ url_for('main.confirmdeleteuser', user_id=user.id)}}">Delete</a>
+        </span>
+    </div>
+</div>
+{% endblock %}

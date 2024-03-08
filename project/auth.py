@@ -49,10 +49,12 @@ def signup_post():
     # add the new user to the database
     db.session.add(new_user)
     db.session.commit()
+    flash('User successfully created. Please use these credentials to log in.')
     return redirect(url_for('auth.login'))
 
 @auth.route('/logout')
 @login_required
 def logout():
     logout_user()
+    flash('Successfully logged out.')
     return redirect(url_for('main.index'))

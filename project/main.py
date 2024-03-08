@@ -111,6 +111,21 @@ def confirmdelete(contact_id):
     flash('Successfully deleted contact')
     return redirect(url_for('main.contacts'))
 
+@main.route('/deleteuser/<int:user_id>')
+@login_required
+def deleteuser(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    return render_template('deleteUser.html', user=user)
+
+@main.route('/confirmdeleteuser/<int:user_id>')
+@login_required
+def confirmdeleteuser(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    db.session.delete(user)
+    db.session.commit() 
+    flash('Successfully deleted user')
+    return redirect(url_for('main.users'))
+
 @main.route('/users')
 @login_required
 def users():

@@ -3,12 +3,21 @@
 {% block content %}
 <div class="column is-8">
     <h3 class="title">Users</h3>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="notification is-info" id="fadeout">
+            <button class="delete"></button>
+            {{ messages[0] }}
+        </div>
+    {% endif %}
+    {% endwith %}
     <table class="table is-striped is-hoverable">
         <thead>
         <tr>
             <th>Name</th>
             <th>Email</th>
             <th>User Type</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -17,6 +26,11 @@
             <td>{{user.name|truncate(50, True)}}</td>
             <td>{{user.email|truncate(50, True)}}</td>
             <td>{{user.userType|truncate(50, True)}}</td>
+            <td>
+                {% if user.userType != "Admin" %}
+                <a class="button is-danger is-small" href="{{ url_for('main.deleteuser', user_id=user.id)}}">Delete</a>
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
         </tbody>
