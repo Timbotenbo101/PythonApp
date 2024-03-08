@@ -25,6 +25,11 @@
                 <a href="{{ url_for('main.profile') }}" class="navbar-item has-text-white has-background-dark">
                     Profile
                 </a>
+                {% if current_user.userType == "Admin" %}
+                <a href="{{ url_for('main.users') }}" class="navbar-item has-text-white has-background-dark hideMe">
+                    Users
+                </a>
+                {% endif %}
             </div>
             {% endif %}
             <div class="navbar-end">

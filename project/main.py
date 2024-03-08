@@ -1,7 +1,7 @@
 from flask import Blueprint, redirect, render_template, request, flash, url_for
 from flask_login import login_required, current_user
 from . import db
-from .models import Contacts
+from .models import Contacts, User
 from .validator import validateContact
 
 main = Blueprint('main', __name__)
@@ -110,6 +110,12 @@ def confirmdelete(contact_id):
     db.session.commit()
     flash('Successfully deleted contact')
     return redirect(url_for('main.contacts'))
+
+@main.route('/users')
+@login_required
+def users():
+    users = User.query.all()
+    return render_template('users.html', users=users)
 
 
     
