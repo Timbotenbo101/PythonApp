@@ -3,7 +3,14 @@
 {% block content %}
 <div class="column is-4">
     <h3 class="title">Your Profile</h3>
-    
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="notification is-success" id="fadeout">
+            <button class="delete"></button>
+            {{ messages[0] }}
+        </div>
+    {% endif %}
+    {% endwith %}
     <div class="box">
         <div class="field">
             <strong>Name: </strong>{{current_user.name}}
