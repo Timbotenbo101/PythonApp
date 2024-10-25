@@ -18,9 +18,7 @@ Although an existing database file has been included with the code, the database
 As it should not be possible for an unauthorised user to sign up as admin, an admin user is instead seeded on initial database creation with the following credentials:
   
 - **Email:** admin@admin.com
-- **Password:** Admin123 
-
-> **Note:** These credentials would be kept secret in a production environment. It would also be an improvement to the system if the initial admin could then make other users into admins
+- **Password:** CONTACT ADMIN FOR DETAILS
 
 
 # System
