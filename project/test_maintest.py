@@ -20,14 +20,15 @@ def login_user(client):
 def test_index(client):
     response = client.get('/')
     assert response.status_code == 200
-    assert b'Welcome to the Contacts App' in response.data  # Update assertion to match actual content in index.html
+    assert b'Welcome to the Contacts App' in response.data 
 
 def test_profile_logged_in(client, login_user):
     response = client.get('/profile')
     assert response.status_code == 200
-    assert b'Your Profile' in response.data  # Adjust based on your login page content
+    assert b'Your Profile' in response.data 
+    assert b'test@test.com' in response.data 
 
 def test_profile_not_logged_in(client):
     response = client.get('/profile')
     assert response.status_code == 302
-    assert b'Your Profile' not in response.data  # Adjust based on your login page content
+    assert b'Your Profile' not in response.data  
