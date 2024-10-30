@@ -33,11 +33,18 @@ app.register_blueprint(main_blueprint)
 with app.app_context():
     db.create_all()
     if not User.query.filter(User.email == 'admin@admin.com').first():
-        user = User(
+        admin = User(
             email='admin@admin.com',
             password=generate_password_hash('Admin123'),
             name='Admin User',
             userType='Admin'
         )
+        user = User(
+            email='test@test.com',
+            password=generate_password_hash('Testing123'),
+            name='Test User',
+            userType='User'
+        )
+        db.session.add(admin)
         db.session.add(user)
         db.session.commit()
