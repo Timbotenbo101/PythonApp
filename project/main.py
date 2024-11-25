@@ -99,38 +99,52 @@ def editcontact_post():
 @main.route('/deletecontact/<int:contact_id>')
 @login_required
 def deletecontact(contact_id):
-    contact = Contacts.query.filter_by(id=contact_id).first()
-    return render_template('deleteContact.html', contact=contact)
+    if(current_user.userType == "Admin"):
+        contact = Contacts.query.filter_by(id=contact_id).first()
+        return render_template('deleteContact.html', contact=contact)
+    flash("You do not have permission to access that page")
+    return redirect(url_for('main.index'))
 
 @main.route('/confirmdelete/<int:contact_id>')
 @login_required
 def confirmdelete(contact_id):
-    contact = Contacts.query.filter_by(id=contact_id).first()
-    db.session.delete(contact)
-    db.session.commit()
-    flash('Successfully deleted contact')
-    return redirect(url_for('main.contacts'))
-
+    if(current_user.userType == "Admin"):
+        contact = Contacts.query.filter_by(id=contact_id).first()
+        db.session.delete(contact)
+        db.session.commit()
+        flash('Successfully deleted contact')
+        return redirect(url_for('main.contacts'))
+    flash("You do not have permission to access that page")
+    return redirect(url_for('main.index'))
 @main.route('/deleteuser/<int:user_id>')
 @login_required
 def deleteuser(user_id):
-    user = User.query.filter_by(id=user_id).first()
-    return render_template('deleteUser.html', user=user)
+    if(current_user.userType == "Admin"):
+        user = User.query.filter_by(id=user_id).first()
+        return render_template('deleteUser.html', user=user)
+    flash("You do not have permission to access that page")
+    return redirect(url_for('main.index'))
 
 @main.route('/confirmdeleteuser/<int:user_id>')
 @login_required
 def confirmdeleteuser(user_id):
-    user = User.query.filter_by(id=user_id).first()
-    db.session.delete(user)
-    db.session.commit() 
-    flash('Successfully deleted user')
-    return redirect(url_for('main.users'))
+    if(current_user.userType == "Admin"):
+        user = User.query.filter_by(id=user_id).first()
+        db.session.delete(user)
+        db.session.commit() 
+        flash('Successfully deleted user')
+        return redirect(url_for('main.users'))
+    flash("You do not have permission to access that page")
+    return redirect(url_for('main.index'))
+
 
 @main.route('/users')
 @login_required
 def users():
-    users = User.query.all()
-    return render_template('users.html', users=users)
-
+    if(current_user.userType == "Admin"):
+        users = User.query.all()
+        return render_template('users.html', users=users)
+    flash("You do not have permission to access that page")
+    return redirect(url_for('main.index'))
 
     
