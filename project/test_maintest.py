@@ -32,3 +32,12 @@ def test_profile_not_logged_in(client):
     response = client.get('/profile')
     assert response.status_code == 302
     assert b'Your Profile' not in response.data  
+
+def test_users_page_admin(client, login_admin):
+    response = client.get('/users')
+    assert response.status_code == 200
+    assert b'test@test.com' in response.data
+
+def test_users_page_non_admin(client, login_user):
+    response = client.get('/users')
+    assert response.status_code == 302
